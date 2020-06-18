@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Setup jq
-      run: apt update && apt install jq -y
+      run: sudo apt update && sudo apt install jq -y
 
     - name: Setup gcloud environment
       uses: GoogleCloudPlatform/github-actions@0.1.2
