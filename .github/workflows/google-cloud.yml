@@ -1,0 +1,31 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup jq
+      run: apt update && apt install jq -y
+
+    - name: Setup gcloud environment
+      uses: GoogleCloudPlatform/github-actions@0.1.2
+      with:
+        version: '290.0.1'
+        service_account_key: ${{ secrets.GCE_SA_KEY }}
+
+    - name: Configure gcloud account
+      run: |-
+        gcloud config set project ${{ secrets.GCE_PROJECT }}
+        gcloud config set compute/zone asia-south1-a
+        gcloud config set compute/region asia-south1
+
+    - name: Test commands
+      run: |
+        gcloud compute instances list
