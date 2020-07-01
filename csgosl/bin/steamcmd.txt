@@ -1,0 +1,4 @@
+login anonymous
+force_install_dir "/home/vagrant/csgosl/server"
+app_update 740 validate
+exit
