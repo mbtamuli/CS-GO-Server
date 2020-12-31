@@ -14,15 +14,16 @@ jobs:
     - name: Setup jq
       run: sudo apt update && sudo apt install jq -y
 
-    - name: Setup gcloud environment
-      uses: GoogleCloudPlatform/github-actions@0.1.2
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
       with:
-        version: '290.0.1'
-        service_account_key: ${{ secrets.GCE_SA_KEY }}
+        project_id: ${{ secrets.GCE_PROJECT }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
 
     - name: Configure gcloud account
       run: |-
-        gcloud config set project ${{ secrets.GCE_PROJECT }}
+        gcloud info
         gcloud config set compute/zone asia-south1-a
         gcloud config set compute/region asia-south1
 
